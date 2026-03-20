@@ -17,6 +17,7 @@ import java.util.UUID;
 public class EngagementLetterResource {
     public static final String ENGAGEMENT_LETTER = "/engagement-letters";
     public static final String ID_ID = "/{id}";
+    public static final String PUBLIC_ACCESS_TOKEN = "/public-access-token";
 
     private final EngagementLetterService engagementLetterService;
 
@@ -43,6 +44,11 @@ public class EngagementLetterResource {
     @PutMapping(ID_ID)
     public void update(@PathVariable UUID id, @Valid @RequestBody EngagementLetter engagementLetter) {
         this.engagementLetterService.update(id, engagementLetter);
+    }
+
+    @PostMapping(ID_ID + PUBLIC_ACCESS_TOKEN)
+    public PublicAccessTokenResponse createPublicAccessToken(@PathVariable UUID id) {
+        return new PublicAccessTokenResponse(this.engagementLetterService.createPublicAccessToken(id));
     }
 
     @DeleteMapping(ID_ID)
